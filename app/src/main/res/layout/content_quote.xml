@@ -12,8 +12,60 @@
     tools:context="com.example.jvelez.pricecrash.QuoteActivity"
     tools:showIn="@layout/activity_quote">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:orientation="vertical"
+        android:id="@+id/encabezado">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Elija un vehiculo"
+            android:textAlignment="center"
+            android:textSize="22dp"
+            android:id="@+id/titulo"/>
+        <!--<com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/Casas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Casas madres"
+            android:textColorHint="#05ab9a"
+            app:met_floatingLabel="normal" />-->
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Carros">
+
+        </Spinner>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Modelos">
+
+        </Spinner>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="valor total: 0"
+        android:id="@+id/valorTotal"
+        android:layout_alignParentBottom="true"
+        android:textAlignment="center"
+        android:textSize="24dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/valorTotal"
+        android:layout_below="@+id/encabezado">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listasPartes"/>
+    </ScrollView>
+
+
 </RelativeLayout>
