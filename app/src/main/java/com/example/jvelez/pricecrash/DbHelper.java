@@ -110,59 +110,14 @@ public class DbHelper {
     private List<String> list = new ArrayList<String>();
 
 
-    public List<String> getCarsList(){
+    public void configurePersistence(){
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
 
-        list.clear();
+    public Map<String,Object> syncCarsData(){
+
+        map.clear();
         FirebaseDatabase.getInstance().getReference().child(autos).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Map<String, Object> tempMap =  new HashMap<String,Object>();
-                tempMap = (Map<String, Object>)dataSnapshot.getValue();
-                Set<String> tempSet = new HashSet<String>();
-                tempSet = tempMap.keySet();
-                list.addAll(tempSet);
-                Log.d("List",list.toString());
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        return list;
-
-    }
-
-    public List<String> getModelsList(Object car){
-
-        list.clear();
-        FirebaseDatabase.getInstance().getReference().child(autos).child(car.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Map<String, Object> tempMap =  new HashMap<String,Object>();
-                tempMap = (Map<String, Object>)dataSnapshot.getValue();
-                Set<String> tempSet = new HashSet<String>();
-                tempSet = tempMap.keySet();
-                list.addAll(tempSet);
-                Log.d("List",list.toString());
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        return list;
-    }
-
-    public boolean loadPiecesInfo(Object car, Object model){
-
-        //map.clear();
-        FirebaseDatabase.getInstance().getReference().child(autos).child(car.toString()).child(model.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -176,15 +131,10 @@ public class DbHelper {
             }
         });
 
-        if (map!=null){
-            return true;
-        }else {
-            return false;
-        }
-
+        return map;
     }
 
-    public List<String> getPiecesNames(){
+    public List<String> getCarsList(){
 
         list.clear();
         Set<String> tempSet = new HashSet<String>();
@@ -195,25 +145,60 @@ public class DbHelper {
         return list;
     }
 
-    public String getFullPriceOf(Object piece){
+    public List<String> getModelsList(Object car){
 
-        String str;
+        list.clear();
         Map<String, Object> tempMap =  new HashMap<String,Object>();
-        map.get(piece.toString());
-        str = "as";
-        //tempMap = (Map<String, Object>) map.get(pieces.CAPO.toString());
-        Log.d("Fuck","Fuck");
+        tempMap = (Map<String, Object>) map.get(car.toString());
+        Set<String> tempSet = new HashSet<String>();
+        tempSet = tempMap.keySet();
+        list.addAll(tempSet);
+        Log.d("List",list.toString());
+
+        return list;
+    }
+
+    public List<String> getPiecesNames(Object car, Object model){
+
+        list.clear();
+        Map<String, Object> tempMap1 =  new HashMap<String,Object>();
+        Map<String, Object> tempMap2 =  new HashMap<String,Object>();
+        tempMap1 = (Map<String, Object>) map.get(car.toString());
+        tempMap2 = (Map<String, Object>) tempMap1.get(model.toString());
+
+        Set<String> tempSet = new HashSet<String>();
+        tempSet = tempMap2.keySet();
+        list.addAll(tempSet);
+        Log.d("List",list.toString());
+
+        return list;
+    }
+
+    public String getAttributeFor(Object car, Object model, Object piece, Object attribute){
+
+        list.clear();
+        String str = "";
+        Map<String, Object> tempMap1 =  new HashMap<String,Object>();
+        Map<String, Object> tempMap2 =  new HashMap<String,Object>();
+        Map<String, Object> tempMap3 =  new HashMap<String,Object>();
+        tempMap1 = (Map<String, Object>) map.get(car.toString());
+        tempMap2 = (Map<String, Object>) tempMap1.get(model.toString());
+        tempMap3 = (Map<String, Object>) tempMap2.get(piece.toString());
+
+        str = tempMap3.get(attribute.toString()).toString();
+        Log.d("List",str.toString());
 
         return str;
     }
 
-    //dataBase.getCarsList();
-    //dataBase.getModelsList(DbHelper.cars.CHEVROLETCOBALT);
-    //dataBase.getPiecesNames();
-    //dataBase.loadPiecesInfo(DbHelper.cars.CHEVROLETCOBALT, DbHelper.models.MODELO2011);
-    //dataBase.getFullPriceOf(DbHelper.pieces.CAPO);
-
-
-
 
 }
+
+
+//dataBase.configurePersistence();
+//dataBase.syncCarsData();
+
+//dataBase.getCarsList();
+//dataBase.getModelsList(DbHelper.cars.CHEVROLETCOBALT);
+//dataBase.getPiecesNames(DbHelper.cars.CHEVROLETCOBALT,DbHelper.models.MODELO2011);
+//dataBase.getAttributeFor(DbHelper.cars.HYUNDAITIBURON,DbHelper.models.MODELO2013,DbHelper.pieces.MALETERO,DbHelper.attributes.SOLOPINTURA);
