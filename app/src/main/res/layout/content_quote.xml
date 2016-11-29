@@ -50,7 +50,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="valor total: 0"
+        android:text="Precio Final: 0"
         android:id="@+id/valorTotal"
         android:layout_alignParentBottom="true"
         android:textAlignment="center"

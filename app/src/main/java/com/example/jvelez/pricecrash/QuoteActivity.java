@@ -128,7 +128,7 @@ public class QuoteActivity extends AppCompatActivity {
     public static void calcularValorFinal(){
         int valorf=0;
         for(int i=0;i<listapiezas.size();i++){
-            valorf=listapiezas.get(i).getPrecioFinal();
+            valorf+=listapiezas.get(i).getPrecioFinal();
         }
         valorTotal.setText("Precio Final: "+valorf);
     }

@@ -6,7 +6,7 @@
     
     <android.support.v7.widget.CardView
         android:layout_width="200dp"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         app:cardBackgroundColor="#15777A"
         app:cardCornerRadius="10dp"
         android:layout_marginTop="24dp"
@@ -30,7 +30,7 @@
                 android:gravity="center"
                 android:text="value1"/>-->
 
-            <Button
+            <!--<Button
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:layout_alignParentLeft="true"
@@ -44,7 +44,30 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/imagenPieza"
                 android:id="@+id/botonPrecioCompleto"
-                android:text="P.C."/>
+                android:text="P.C."/>-->
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/seleccionPrecio"
+                android:layout_below="@+id/imagenPieza"
+                android:orientation="vertical">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:id="@+id/sinPrecio"
+                    android:text="No agregar"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:id="@+id/soloPintura"
+                    android:text="Solo Pintura"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:id="@+id/precioCompleto"
+                    android:text="Precio Completo"/>
+
+            </RadioGroup>
 
         </RelativeLayout>
 

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.bumptech.glide.Glide;
 
@@ -34,16 +36,23 @@ public class PiezaAdapter extends RecyclerView.Adapter<PiezaAdapter.Myvistaholde
     @Override
     public void onBindViewHolder(Myvistaholder holder, final int position) {
 
-        holder.botonPrecioPintura.setText(listapiezas.get(position).getPrecioPintura()+"");
+        holder.botonSoloPintura.setText(listapiezas.get(position).getPrecioPintura()+"");
         holder.botonPrecioCompleto.setText(listapiezas.get(position).getPrecioCompleto()+"");
         Glide.with(context).load(listapiezas.get(position).getUrlImagen()).into(holder.imagenPieza);
 
-        holder.botonPrecioPintura.setOnClickListener(new View.OnClickListener() {
+        holder.botonNoAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listapiezas.get(position).setPrecioFinal(0);
+                QuoteActivity.calcularValorFinal();
+            }
+        });
+
+        holder.botonSoloPintura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listapiezas.get(position).setPrecioFinal(listapiezas.get(position).getPrecioPintura());
                 QuoteActivity.calcularValorFinal();
-                String valor = Integer.toString(listapiezas.get(position).getPrecioPintura());
             }
         });
 
@@ -64,12 +73,19 @@ public class PiezaAdapter extends RecyclerView.Adapter<PiezaAdapter.Myvistaholde
     public class Myvistaholder extends RecyclerView.ViewHolder{
 
         ImageView imagenPieza;
-        Button botonPrecioPintura, botonPrecioCompleto;
+        RadioGroup seleccionPrecio;
+        RadioButton botonNoAgregar, botonSoloPintura, botonPrecioCompleto;
+        //Button botonPrecioPintura, botonPrecioCompleto;
         public Myvistaholder(View itemView) {
             super(itemView);
             imagenPieza=(ImageView)itemView.findViewById(R.id.imagenPieza);
-            botonPrecioPintura=(Button)itemView.findViewById(R.id.botonPrecioPintura);
-            botonPrecioCompleto=(Button)itemView.findViewById(R.id.botonPrecioCompleto);
+            seleccionPrecio = (RadioGroup)itemView.findViewById(R.id.seleccionPrecio);
+            botonNoAgregar = (RadioButton)itemView.findViewById(R.id.sinPrecio);
+            botonSoloPintura = (RadioButton)itemView.findViewById(R.id.soloPintura);
+            botonPrecioCompleto = (RadioButton)itemView.findViewById(R.id.precioCompleto);
+
+            //botonPrecioPintura=(Button)itemView.findViewById(R.id.botonPrecioPintura);
+            //botonPrecioCompleto=(Button)itemView.findViewById(R.id.botonPrecioCompleto);
 
         }
     }
