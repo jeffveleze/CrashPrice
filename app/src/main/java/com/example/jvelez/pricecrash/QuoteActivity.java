@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QuoteActivity extends AppCompatActivity {
 
@@ -35,7 +37,9 @@ public class QuoteActivity extends AppCompatActivity {
     static TextView titulo,valorTotal;
     private Spinner carro, modelos;
     ArrayAdapter<String> arrayAdapterCarros,arrayAdapterModelos;
-    //private MaterialBetterSpinner casa;
+
+    DbHelper dataBase = new DbHelper();
+    private Map<String, Object> map =  new HashMap<String,Object>();
 
 
     @Override
@@ -48,7 +52,6 @@ public class QuoteActivity extends AppCompatActivity {
         titulo = (TextView) findViewById(R.id.titulo);
         valorTotal = (TextView) findViewById(R.id.valorTotal);
 
-        //casa = (MaterialBetterSpinner)findViewById(R.id.Casas);
         carro = (Spinner)findViewById(R.id.Carros);
         arrayAdapterCarros = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,SPINNERCASAS);
         carro.setAdapter(arrayAdapterCarros);
@@ -61,6 +64,7 @@ public class QuoteActivity extends AppCompatActivity {
             String firstItem = String.valueOf(carro.getSelectedItem());
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
                 if (firstItem.equals(String.valueOf(carro.getSelectedItem()))) {
                     // ToDo when first item is selected
                     modelos.setAdapter(new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,DEFECTO));
