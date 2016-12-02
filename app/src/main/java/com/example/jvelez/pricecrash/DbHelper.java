@@ -7,6 +7,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -123,6 +125,8 @@ public class DbHelper {
 
                 map = (Map<String, Object>)dataSnapshot.getValue();
                 Log.d("Map",map.toString());
+                EventBus.getDefault().post(dataBaseSyncronized());
+                EventBus.getDefault().post(dataBaseSyncronized());
 
             }
             @Override
@@ -132,6 +136,12 @@ public class DbHelper {
         });
 
         return map;
+    }
+
+    public String dataBaseSyncronized(){
+
+        String dataSyncronized = "true";
+        return dataSyncronized;
     }
 
     public List<String> getCarsList(){
@@ -193,7 +203,6 @@ public class DbHelper {
 
 
 }
-
 
 //dataBase.configurePersistence();
 //dataBase.syncCarsData();

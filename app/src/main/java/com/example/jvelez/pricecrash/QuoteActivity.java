@@ -14,6 +14,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +37,7 @@ public class QuoteActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private static ArrayList<Pieza>listapiezas= new ArrayList<>();
     private PiezaAdapter adapter;
+    private boolean dbSyncronized = false;
 
     static TextView titulo,valorTotal;
     private Spinner carro, modelos;
@@ -49,13 +54,19 @@ public class QuoteActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        dataBase.configurePersistence();
+        dataBase.syncCarsData();
+
         titulo = (TextView) findViewById(R.id.titulo);
         valorTotal = (TextView) findViewById(R.id.valorTotal);
 
         carro = (Spinner)findViewById(R.id.Carros);
-        arrayAdapterCarros = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,SPINNERCASAS);
-        carro.setAdapter(arrayAdapterCarros);
 
+        if (!dbSyncronized){
+            arrayAdapterCarros = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,DEFECTO);
+        }
+
+        carro.setAdapter(arrayAdapterCarros);
         modelos = (Spinner) findViewById(R.id.Modelos);
         arrayAdapterModelos = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,DEFECTO);
         modelos.setAdapter(arrayAdapterModelos);
@@ -98,6 +109,19 @@ public class QuoteActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus myEventBus = EventBus.getDefault();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     public void mostrarModelos(String carroSelected) {
@@ -175,4 +199,14 @@ public class QuoteActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Subscribe
+    public void onEvent(String dataSyncronized){
+
+        dbSyncronized = true;
+        arrayAdapterCarros = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,dataBase.getCarsList());
+        carro.setAdapter(arrayAdapterCarros);
+    }
+
+
 }
