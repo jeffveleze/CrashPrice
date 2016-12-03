@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuoteActivity extends AppCompatActivity {
@@ -61,15 +63,14 @@ public class QuoteActivity extends AppCompatActivity {
         valorTotal = (TextView) findViewById(R.id.valorTotal);
 
         carro = (Spinner)findViewById(R.id.Carros);
+        modelos = (Spinner)findViewById(R.id.Modelos);
 
         if (!dbSyncronized){
             arrayAdapterCarros = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,DEFECTO);
+            arrayAdapterModelos = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,DEFECTO);
+            carro.setAdapter(arrayAdapterCarros);
+            modelos.setAdapter(arrayAdapterModelos);
         }
-
-        carro.setAdapter(arrayAdapterCarros);
-        modelos = (Spinner) findViewById(R.id.Modelos);
-        arrayAdapterModelos = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,DEFECTO);
-        modelos.setAdapter(arrayAdapterModelos);
 
         carro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             String firstItem = String.valueOf(carro.getSelectedItem());
@@ -114,7 +115,7 @@ public class QuoteActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus myEventBus = EventBus.getDefault();
+        //EventBus myEventBus = EventBus.getDefault();
         EventBus.getDefault().register(this);
     }
 
@@ -203,10 +204,28 @@ public class QuoteActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(String dataSyncronized){
 
-        dbSyncronized = true;
-        arrayAdapterCarros = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,dataBase.getCarsList());
-        carro.setAdapter(arrayAdapterCarros);
+        if (!dbSyncronized){
+            dbSyncronized = true;
+
+            arrayAdapterCarros = new ArrayAdapter<String>(QuoteActivity.this,android.R.layout.simple_dropdown_item_1line,dataBase.getCarsList());
+            carro.setAdapter(arrayAdapterCarros);
+            arrayAdapterModelos = new ArrayAdapter<String>(QuoteActivity.this,android.R.layout.simple_dropdown_item_1line,dataBase.getModelsList(carro.getSelectedItem()));
+            modelos.setAdapter(arrayAdapterModelos);
+
+            Toast.makeText(this,
+                    "Piezas: "+dataBase.getPiecesNames(carro.getSelectedItem(),modelos.getSelectedItem()),
+                    Toast.LENGTH_LONG
+            ).show();
+            Toast.makeText(this,
+                    "Precio: "+dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),DbHelper.pieces.CAPO,DbHelper.attributes.PRECIOCOMPLETO),
+                    Toast.LENGTH_LONG
+            ).show();
+
+        }
+
     }
+
+
 
 
 }

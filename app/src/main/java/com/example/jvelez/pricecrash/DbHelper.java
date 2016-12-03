@@ -109,7 +109,6 @@ public class DbHelper {
     final String autos = "Autos";
     final String imagenes = "imagenes";
     private Map<String, Object> map =  new HashMap<String,Object>();
-    private List<String> list = new ArrayList<String>();
 
 
     public void configurePersistence(){
@@ -125,7 +124,6 @@ public class DbHelper {
 
                 map = (Map<String, Object>)dataSnapshot.getValue();
                 Log.d("Map",map.toString());
-                EventBus.getDefault().post(dataBaseSyncronized());
                 EventBus.getDefault().post(dataBaseSyncronized());
 
             }
@@ -144,33 +142,34 @@ public class DbHelper {
         return dataSyncronized;
     }
 
+
     public List<String> getCarsList(){
 
-        list.clear();
         Set<String> tempSet = new HashSet<String>();
         tempSet = map.keySet();
-        list.addAll(tempSet);
-        Log.d("List",list.toString());
+        List<String> lista = new ArrayList<String>();
+        lista.addAll(tempSet);
+        Log.d("List",lista.toString());
 
-        return list;
+        return lista;
     }
 
     public List<String> getModelsList(Object car){
 
-        list.clear();
         Map<String, Object> tempMap =  new HashMap<String,Object>();
         tempMap = (Map<String, Object>) map.get(car.toString());
         Set<String> tempSet = new HashSet<String>();
         tempSet = tempMap.keySet();
-        list.addAll(tempSet);
-        Log.d("List",list.toString());
+        List<String> lista = new ArrayList<String>();
+        lista.addAll(tempSet);
+        Log.d("List",lista.toString());
 
-        return list;
+        return lista;
     }
 
     public List<String> getPiecesNames(Object car, Object model){
 
-        list.clear();
+        List<String> lista = new ArrayList<String>();
         Map<String, Object> tempMap1 =  new HashMap<String,Object>();
         Map<String, Object> tempMap2 =  new HashMap<String,Object>();
         tempMap1 = (Map<String, Object>) map.get(car.toString());
@@ -178,15 +177,14 @@ public class DbHelper {
 
         Set<String> tempSet = new HashSet<String>();
         tempSet = tempMap2.keySet();
-        list.addAll(tempSet);
-        Log.d("List",list.toString());
+        lista.addAll(tempSet);
+        Log.d("List",lista.toString());
 
-        return list;
+        return lista;
     }
 
     public String getAttributeFor(Object car, Object model, Object piece, Object attribute){
 
-        list.clear();
         String str = "";
         Map<String, Object> tempMap1 =  new HashMap<String,Object>();
         Map<String, Object> tempMap2 =  new HashMap<String,Object>();
