@@ -404,14 +404,14 @@ public class SplashPriceCrash extends AwesomeSplash {
         configSplash.setOriginalWidth(200); //in relation to your svg (path) resource
         configSplash.setAnimPathStrokeDrawingDuration(2000);
         configSplash.setPathSplashStrokeSize(3); //I advise value be <5
-        configSplash.setPathSplashStrokeColor(R.color.yellow); //any color you want form colors.xml
+        configSplash.setPathSplashStrokeColor(R.color.yellowlight); //any color you want form colors.xml
         configSplash.setAnimPathFillingDuration(3000);
-        configSplash.setPathSplashFillColor(R.color.yellowlight); //path object filling color
+        configSplash.setPathSplashFillColor(R.color.beige); //path object filling color
 
 
         //Customize Title
-        configSplash.setTitleSplash("Price Crash");
-        configSplash.setTitleTextColor(R.color.yellowlight);
+        configSplash.setTitleSplash("pricecrash");
+        configSplash.setTitleTextColor(R.color.beige);
         configSplash.setTitleTextSize(40f); //float value
         configSplash.setAnimTitleDuration(2000);
         configSplash.setAnimTitleTechnique(Techniques.FlipInX);
