@@ -66,6 +66,11 @@ public class PiezaAdapter extends RecyclerView.Adapter<PiezaAdapter.Myvistaholde
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return listapiezas.size();
     }

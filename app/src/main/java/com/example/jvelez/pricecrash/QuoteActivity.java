@@ -84,9 +84,7 @@ public class QuoteActivity extends AppCompatActivity {
                     // Todo when item is selected by the user
                     String carroSelected=carro.getSelectedItem().toString();
                     mostrarModelos(carroSelected);
-
                 }
-
             }
 
             @Override
@@ -99,7 +97,14 @@ public class QuoteActivity extends AppCompatActivity {
             String firstItem = String.valueOf(modelos.getSelectedItem());
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                mostrarInformacion(carro.getSelectedItem().toString(),modelos.getSelectedItem().toString());
+                if (firstItem.equals(String.valueOf(carro.getSelectedItem()))) {
+                    // ToDo when first item is selected
+
+                } else {
+                    // Todo when item is selected by the user
+                    mostrarInformacion(carro.getSelectedItem().toString(),modelos.getSelectedItem().toString());
+
+                }
             }
 
             @Override
@@ -126,32 +131,11 @@ public class QuoteActivity extends AppCompatActivity {
     }
 
     public void mostrarModelos(String carroSelected) {
-        switch (carroSelected){
-            case "Mazda2":
-                arrayAdapterModelos = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,MODELOSMAZDA2);
-                modelos.setAdapter(arrayAdapterModelos);
-                break;
-            case "Mazda6":
-                arrayAdapterModelos = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,MODELOSMAZDA6);
-                modelos.setAdapter(arrayAdapterModelos);
-                break;
-            case "Auris":
-                arrayAdapterModelos = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,MODELOSAURIS);
-                modelos.setAdapter(arrayAdapterModelos);
-                break;
-            case "Verso":
-                arrayAdapterModelos = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,MODELOSVERSO);
-                modelos.setAdapter(arrayAdapterModelos);
-                break;
-            case "Captur":
-                arrayAdapterModelos = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,MODELOSCAPTUR);
-                modelos.setAdapter(arrayAdapterModelos);
-                break;
-            case "Clio":
-                arrayAdapterModelos = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,MODELOSCLIO);
-                modelos.setAdapter(arrayAdapterModelos);
-                break;
-        }
+
+        arrayAdapterModelos = new ArrayAdapter<String>(QuoteActivity.this,android.R.layout.simple_dropdown_item_1line,dataBase.getModelsList(carro.getSelectedItem()));
+        modelos.setAdapter(arrayAdapterModelos);
+
+        //Toast.makeText(this,"metodo mostrar modelos",Toast.LENGTH_SHORT).show();
     }
 
     public static void calcularValorFinal(){
@@ -168,13 +152,27 @@ public class QuoteActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         adapter=new PiezaAdapter(this,listapiezas);
         recyclerView.setAdapter(adapter);
+        listapiezas.clear();
+        List<String> piezas= dataBase.getPiecesNames(carro.getSelectedItem(),modelos.getSelectedItem());
 
-        for(int i=0;i<10;i++){
+        /*Toast.makeText(this,
+                "Piezas: "+piezas.get(2),
+                Toast.LENGTH_LONG
+        ).show();*/
+        for(int i=0;i<piezas.size();i++){
+            //String urlimage="http://www.orionlujosysonido.com/images/rines/rin3.jpg";
+            String urlimage=dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.IMAGEN);
+            int precioPintura=Integer.parseInt(dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.SOLOPINTURA));
+            int precioCompleto=Integer.parseInt(dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.PRECIOCOMPLETO));
+            listapiezas.add(new Pieza(urlimage,precioPintura,precioCompleto));
+        }
+
+       /* for(int i=0;i<10;i++){
             String urlimage="http://www.orionlujosysonido.com/images/rines/rin3.jpg";
             int precioPintura=10000;
             int precioCompleto=40000;
             listapiezas.add(new Pieza(urlimage,precioPintura,precioCompleto));
-        }
+        }*/
         adapter.notifyDataSetChanged();
 
     }
@@ -212,20 +210,17 @@ public class QuoteActivity extends AppCompatActivity {
             arrayAdapterModelos = new ArrayAdapter<String>(QuoteActivity.this,android.R.layout.simple_dropdown_item_1line,dataBase.getModelsList(carro.getSelectedItem()));
             modelos.setAdapter(arrayAdapterModelos);
 
-            Toast.makeText(this,
+           /* Toast.makeText(this,
                     "Piezas: "+dataBase.getPiecesNames(carro.getSelectedItem(),modelos.getSelectedItem()),
                     Toast.LENGTH_LONG
             ).show();
             Toast.makeText(this,
-                    "Precio: "+dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),DbHelper.pieces.CAPO,DbHelper.attributes.PRECIOCOMPLETO),
+                    "Precio: "+dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),DbHelper.pieces.CAPO,DbHelper.attributes.IMAGEN),
                     Toast.LENGTH_LONG
-            ).show();
+            ).show();*/
 
         }
 
     }
-
-
-
 
 }
