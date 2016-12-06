@@ -37,8 +37,8 @@ public class PiezaAdapter extends RecyclerView.Adapter<PiezaAdapter.Myvistaholde
     @Override
     public void onBindViewHolder(Myvistaholder holder, final int position) {
 
-        holder.botonSoloPintura.setText("Pintura: "+String.format("%,d",listapiezas.get(position).getPrecioPintura()));
-        holder.botonPrecioCompleto.setText("Completo: "+String.format("%,d",listapiezas.get(position).getPrecioCompleto()));
+        holder.botonSoloPintura.setText("Pintura: $ "+String.format("%,d",listapiezas.get(position).getPrecioPintura()));
+        holder.botonPrecioCompleto.setText("Completo: $ "+String.format("%,d",listapiezas.get(position).getPrecioCompleto()));
         holder.nombrePieza.setText(listapiezas.get(position).getNombre());
         Glide.with(context).load(listapiezas.get(position).getUrlImagen()).into(holder.imagenPieza);
 

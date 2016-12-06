@@ -82,6 +82,7 @@ public class QuoteActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 manageProgressDialog();
+                valorTotal.setText("$: "+String.format("%,d",0));
 
                 if (firstItem.equals(String.valueOf(carro.getSelectedItem()))) {
                     // ToDo when first item is selected
@@ -106,6 +107,7 @@ public class QuoteActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 manageProgressDialog();
+                valorTotal.setText("$: "+String.format("%,d",0));
 
                 if (firstItem.equals(String.valueOf(carro.getSelectedItem()))) {
                     // ToDo when first item is selected
@@ -195,7 +197,9 @@ public class QuoteActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
+            manageProgressDialog();
             saveLoggedStatus();
+            finish();
             Intent intent = new Intent(QuoteActivity.this,Login.class);
             startActivity(intent);
 

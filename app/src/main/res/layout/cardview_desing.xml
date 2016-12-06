@@ -31,6 +31,7 @@
                 android:layout_below="@+id/imagenPieza"
                 android:text="puerta"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textSize="15dp"
                 />
 
@@ -45,17 +46,20 @@
                     android:layout_height="30dp"
                     android:id="@+id/sinPrecio"
                     android:text="No agregar"
+                    android:textSize="10dp"
                     android:checked="true"/>
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:id="@+id/soloPintura"
-                    android:text="Solo Pintura"/>
+                    android:text="Solo Pintura"
+                    android:textSize="12dp"/>
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:id="@+id/precioCompleto"
-                    android:text="Precio Completo"/>
+                    android:text="Precio Completo"
+                    android:textSize="12dp"/>
 
             </RadioGroup>
 
