@@ -155,7 +155,7 @@ public class QuoteActivity extends AppCompatActivity {
         for(int i=0;i<listapiezas.size();i++){
             valorf+=listapiezas.get(i).getPrecioFinal();
         }
-        valorTotal.setText("$: "+String.format("%,d",valorf));
+        valorTotal.setText("$ "+String.format("%,d",valorf));
     }
 
     public void mostrarInformacion(String carroselected,String modeloselected) {

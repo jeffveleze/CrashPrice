@@ -20,14 +20,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Elija un vehiculo"
+            android:text="Elije el vehiculo"
             android:textAlignment="center"
-            android:textSize="22dp"
+            android:gravity="center_horizontal"
+            android:textSize="22sp"
             android:id="@+id/titulo"/>
 
         <Spinner
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="30dp"
             android:id="@+id/Carros">
         </Spinner>
 
@@ -39,18 +41,10 @@
         </Spinner>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Precio Final: 0"
-        android:id="@+id/valorTotal"
-        android:layout_alignParentBottom="true"
-        android:textAlignment="center"
-        android:textSize="24dp"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
         android:layout_above="@+id/valorTotal"
         android:layout_below="@+id/encabezado">
         <android.support.v7.widget.RecyclerView
@@ -58,6 +52,19 @@
             android:layout_height="match_parent"
             android:id="@+id/listasPartes"/>
     </ScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:text="Precio Final: 0"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:id="@+id/valorTotal"
+        android:layout_alignParentBottom="true"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textSize="24dp"/>
 
 
 </RelativeLayout>
