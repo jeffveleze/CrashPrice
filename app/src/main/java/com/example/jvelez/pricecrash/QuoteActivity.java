@@ -153,7 +153,7 @@ public class QuoteActivity extends AppCompatActivity {
         for(int i=0;i<listapiezas.size();i++){
             valorf+=listapiezas.get(i).getPrecioFinal();
         }
-        valorTotal.setText("$: "+valorf);
+        valorTotal.setText("$: "+String.format("%,d",valorf));
     }
 
     public void mostrarInformacion(String carroselected,String modeloselected) {
@@ -165,10 +165,7 @@ public class QuoteActivity extends AppCompatActivity {
         listapiezas.clear();
         List<String> piezas= dataBase.getPiecesNames(carro.getSelectedItem(),modelos.getSelectedItem());
 
-        /*Toast.makeText(this,
-                "Piezas: "+piezas.get(2),
-                Toast.LENGTH_LONG
-        ).show();*/
+
         for(int i=0;i<piezas.size();i++){
             //String urlimage="http://www.orionlujosysonido.com/images/rines/rin3.jpg";
             String urlimage=dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.IMAGEN);
@@ -177,13 +174,6 @@ public class QuoteActivity extends AppCompatActivity {
             int precioCompleto=Integer.parseInt(dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.PRECIOCOMPLETO));
             listapiezas.add(new Pieza(urlimage,nombre,precioPintura,precioCompleto));
         }
-
-       /* for(int i=0;i<10;i++){
-            String urlimage="http://www.orionlujosysonido.com/images/rines/rin3.jpg";
-            int precioPintura=10000;
-            int precioCompleto=40000;
-            listapiezas.add(new Pieza(urlimage,precioPintura,precioCompleto));
-        }*/
         adapter.notifyDataSetChanged();
 
     }

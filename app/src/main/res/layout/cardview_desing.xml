@@ -44,7 +44,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:id="@+id/sinPrecio"
-                    android:text="No agregar"/>
+                    android:text="No agregar"
+                    android:checked="true"/>
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
