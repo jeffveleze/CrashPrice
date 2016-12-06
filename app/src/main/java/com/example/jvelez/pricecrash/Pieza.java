@@ -6,12 +6,14 @@ package com.example.jvelez.pricecrash;
  */
 public class Pieza {
     private String urlImagen;
+    private String nombre;
     private int precioPintura;
     private int precioCompleto;
     private int precioFinal;
 
-    public Pieza(String urlImagen, int precioPintura, int precioCompleto) {
+    public Pieza(String urlImagen, String nombre, int precioPintura, int precioCompleto) {
         this.urlImagen = urlImagen;
+        this.nombre = nombre;
         this.precioPintura = precioPintura;
         this.precioCompleto = precioCompleto;
         this.precioFinal=0;
@@ -24,6 +26,14 @@ public class Pieza {
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getPrecioPintura() {

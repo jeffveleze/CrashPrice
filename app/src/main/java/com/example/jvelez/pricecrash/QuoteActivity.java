@@ -172,9 +172,10 @@ public class QuoteActivity extends AppCompatActivity {
         for(int i=0;i<piezas.size();i++){
             //String urlimage="http://www.orionlujosysonido.com/images/rines/rin3.jpg";
             String urlimage=dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.IMAGEN);
+            String nombre = ""+piezas.get(i);
             int precioPintura=Integer.parseInt(dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.SOLOPINTURA));
             int precioCompleto=Integer.parseInt(dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.PRECIOCOMPLETO));
-            listapiezas.add(new Pieza(urlimage,precioPintura,precioCompleto));
+            listapiezas.add(new Pieza(urlimage,nombre,precioPintura,precioCompleto));
         }
 
        /* for(int i=0;i<10;i++){
