@@ -23,6 +23,18 @@
         <item name="android:background">#00bfa5</item>
     </style>
 
+    <style name="NewDialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@color/primary_darker</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
     <style name="MyEditTextTheme">
         <!-- Used for the bottom line when not selected / focused -->
         <item name="colorControlNormal">@color/colorPrimaryDark</item>
