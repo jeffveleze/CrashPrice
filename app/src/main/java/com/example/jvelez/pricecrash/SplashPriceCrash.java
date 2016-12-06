@@ -1,6 +1,8 @@
 package com.example.jvelez.pricecrash;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +14,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
@@ -423,7 +426,23 @@ public class SplashPriceCrash extends AwesomeSplash {
     public void animationsFinished() {
 
         //transit to another activity here or do whatever you want
-        Intent intent = new Intent(SplashPriceCrash.this,QuoteActivity.class);
-        startActivity(intent);
+        if (checkIfLogged()){
+            Intent intent = new Intent(SplashPriceCrash.this,QuoteActivity.class);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(SplashPriceCrash.this,Login.class);
+            startActivity(intent);
+        }
+    }
+
+    private boolean checkIfLogged() {
+        boolean valueToReturn = false;
+        SharedPreferences sharedPreferences = getSharedPreferences("infoapp", Context.MODE_PRIVATE);
+        String str = sharedPreferences.getString("logged","");
+        if (str.equals("true")){
+            valueToReturn = true;
+        }
+
+        return valueToReturn;
     }
 }

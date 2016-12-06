@@ -1,6 +1,9 @@
 package com.example.jvelez.pricecrash;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -200,6 +203,11 @@ public class QuoteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            saveLoggedStatus();
+            Intent intent = new Intent(QuoteActivity.this,Login.class);
+            startActivity(intent);
+
             return true;
         }
 
@@ -223,6 +231,15 @@ public class QuoteActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 1500);
+
+    }
+
+    private void saveLoggedStatus() {
+
+        SharedPreferences sharedPreference = getSharedPreferences("infoapp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreference.edit();
+        editor.putString("logged", "false");
+        editor.commit();
 
     }
 
