@@ -1,5 +1,6 @@
 package com.example.jvelez.pricecrash;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -77,6 +78,8 @@ public class QuoteActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+                manageProgressDialog();
+
                 if (firstItem.equals(String.valueOf(carro.getSelectedItem()))) {
                     // ToDo when first item is selected
                     modelos.setAdapter(new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,DEFECTO));
@@ -85,6 +88,7 @@ public class QuoteActivity extends AppCompatActivity {
                     String carroSelected=carro.getSelectedItem().toString();
                     mostrarModelos(carroSelected);
                 }
+
             }
 
             @Override
@@ -97,6 +101,9 @@ public class QuoteActivity extends AppCompatActivity {
             String firstItem = String.valueOf(modelos.getSelectedItem());
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                manageProgressDialog();
+
                 if (firstItem.equals(String.valueOf(carro.getSelectedItem()))) {
                     // ToDo when first item is selected
 
@@ -199,6 +206,26 @@ public class QuoteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void manageProgressDialog() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(QuoteActivity.this,
+                R.style.Custom_Progress_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Cargando...");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        // On complete call either onLoginSuccess or onLoginFailed
+                        progressDialog.dismiss();
+                    }
+                }, 1500);
+
+    }
+
     @Subscribe
     public void onEvent(String dataSyncronized){
 
@@ -209,15 +236,6 @@ public class QuoteActivity extends AppCompatActivity {
             carro.setAdapter(arrayAdapterCarros);
             arrayAdapterModelos = new ArrayAdapter<String>(QuoteActivity.this,android.R.layout.simple_dropdown_item_1line,dataBase.getModelsList(carro.getSelectedItem()));
             modelos.setAdapter(arrayAdapterModelos);
-
-           /* Toast.makeText(this,
-                    "Piezas: "+dataBase.getPiecesNames(carro.getSelectedItem(),modelos.getSelectedItem()),
-                    Toast.LENGTH_LONG
-            ).show();
-            Toast.makeText(this,
-                    "Precio: "+dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),DbHelper.pieces.CAPO,DbHelper.attributes.IMAGEN),
-                    Toast.LENGTH_LONG
-            ).show();*/
 
         }
 

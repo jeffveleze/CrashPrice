@@ -17,4 +17,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Custom.Progress.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">#00bfa5</item>
+        <item name="android:textColorPrimary">#00bfa5</item>
+        <item name="android:background">#00bfa5</item>
+    </style>
+
 </resources>
