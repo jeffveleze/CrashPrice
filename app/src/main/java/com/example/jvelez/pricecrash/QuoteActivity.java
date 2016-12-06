@@ -153,7 +153,7 @@ public class QuoteActivity extends AppCompatActivity {
         for(int i=0;i<listapiezas.size();i++){
             valorf+=listapiezas.get(i).getPrecioFinal();
         }
-        valorTotal.setText("Precio Final: "+valorf);
+        valorTotal.setText("$: "+valorf);
     }
 
     public void mostrarInformacion(String carroselected,String modeloselected) {
