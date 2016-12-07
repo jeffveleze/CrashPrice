@@ -40,7 +40,7 @@ public class PiezaAdapter extends RecyclerView.Adapter<PiezaAdapter.Myvistaholde
         holder.botonSoloPintura.setText("Pintura: $ "+String.format("%,d",listapiezas.get(position).getPrecioPintura()));
         holder.botonPrecioCompleto.setText("Completo: $ "+String.format("%,d",listapiezas.get(position).getPrecioCompleto()));
         holder.nombrePieza.setText(listapiezas.get(position).getNombre());
-        Glide.with(context).load(listapiezas.get(position).getUrlImagen()).into(holder.imagenPieza);
+        Glide.with(context).load(listapiezas.get(position).getUrlImagen()).fitCenter().centerCrop().into(holder.imagenPieza);
 
 
         holder.botonNoAgregar.setOnClickListener(new View.OnClickListener() {

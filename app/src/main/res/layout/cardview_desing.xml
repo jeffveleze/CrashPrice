@@ -21,12 +21,12 @@
             android:layout_height="match_parent">
             
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
                 android:src="@android:mipmap/sym_def_app_icon"
                 android:id="@+id/imagenPieza"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"/>
 
             <TextView
                 android:layout_width="match_parent"
