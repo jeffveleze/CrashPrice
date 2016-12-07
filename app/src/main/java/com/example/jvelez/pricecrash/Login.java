@@ -1,5 +1,6 @@
 package com.example.jvelez.pricecrash;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,11 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import dmax.dialog.SpotsDialog;
+
 public class Login extends AppCompatActivity {
 
     EditText user, password;
     Button loginButton;
     DbHelper dataBase = new DbHelper();
+    private AlertDialog myProgressDialog;
     String userRead = "jeff@gmail.com";
     String passwordRead = "jeff123";
 
@@ -29,19 +33,14 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
-
         //dataBase.configurePersistence();
         //dataBase.syncCarsData();
 
+        myProgressDialog = new SpotsDialog(this, R.style.CustomProgressDialogStarting);
         user = (EditText) findViewById(R.id.usuario);
         password = (EditText) findViewById(R.id.password);
         loginButton = (Button) findViewById(R.id.loginbutton);
 
-        
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +48,6 @@ public class Login extends AppCompatActivity {
                 if(validationsAreOkay()){
                     manageProgressDialog();
                 }
-
 
             }
         });
@@ -81,25 +79,18 @@ public class Login extends AppCompatActivity {
 
     private void manageProgressDialog() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(Login.this,
-                R.style.Custom_Progress_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Iniciando...");
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
+        myProgressDialog.show();
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
-                        progressDialog.dismiss();
+                        myProgressDialog.dismiss();
                         saveLoggedStatus();
                         goToNextActivity();
                         finish();
                     }
                 }, 2000);
-
     }
 
     private void saveLoggedStatus() {

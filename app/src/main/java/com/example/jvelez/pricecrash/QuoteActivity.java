@@ -1,5 +1,6 @@
 package com.example.jvelez.pricecrash;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dmax.dialog.SpotsDialog;
+
 public class QuoteActivity extends AppCompatActivity {
 
     String[] SPINNERCASAS = {"Seleccione una vehiculo","Mazda2", "Mazda6",
@@ -46,6 +49,10 @@ public class QuoteActivity extends AppCompatActivity {
     private static ArrayList<Pieza>listapiezas= new ArrayList<>();
     private PiezaAdapter adapter;
     private boolean dbSyncronized = false;
+    private boolean firstCallToProgress = true;
+    private boolean firstProgressToShow = true;
+    private AlertDialog myProgressDialog;
+
 
     static TextView titulo,valorTotal;
     private Spinner carro, modelos;
@@ -65,6 +72,7 @@ public class QuoteActivity extends AppCompatActivity {
         dataBase.configurePersistence();
         dataBase.syncCarsData();
 
+        myProgressDialog = new SpotsDialog(this, R.style.CustomProgressDialogLoading);
         titulo = (TextView) findViewById(R.id.titulo);
         valorTotal = (TextView) findViewById(R.id.valorTotal);
 
@@ -78,13 +86,30 @@ public class QuoteActivity extends AppCompatActivity {
             modelos.setAdapter(arrayAdapterModelos);
         }
 
+        titulo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myProgressDialog.show();
+                new android.os.Handler().postDelayed(
+                        new Runnable() {
+                            public void run() {
+                                // On complete call either onLoginSuccess or onLoginFailed
+                                myProgressDialog.dismiss();
+                            }
+                        }, 5000);
+            }
+        });
+
+
         carro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             String firstItem = String.valueOf(carro.getSelectedItem());
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                manageProgressDialog();
                 valorTotal.setText("$: "+String.format("%,d",0));
+                if (!firstCallToProgress){
+                    manageProgressDialog();
+                }
 
                 if (firstItem.equals(String.valueOf(carro.getSelectedItem()))) {
                     // ToDo when first item is selected
@@ -108,8 +133,11 @@ public class QuoteActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                manageProgressDialog();
                 valorTotal.setText("$: "+String.format("%,d",0));
+                if (firstCallToProgress){
+                    firstCallToProgress = false;
+                }
+                manageProgressDialog();
 
                 if (firstItem.equals(String.valueOf(carro.getSelectedItem()))) {
                     // ToDo when first item is selected
@@ -127,8 +155,6 @@ public class QuoteActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     @Override
@@ -143,6 +169,8 @@ public class QuoteActivity extends AppCompatActivity {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
+
 
     public void mostrarModelos(String carroSelected) {
 
@@ -195,15 +223,24 @@ public class QuoteActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        final AlertDialog myProgressDialogToClose = new SpotsDialog(this, R.style.CustomProgressDialogClosing);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            manageProgressDialog();
-            saveLoggedStatus();
-            finish();
-            Intent intent = new Intent(QuoteActivity.this,Login.class);
-            startActivity(intent);
+            myProgressDialogToClose.show();
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            // On complete call either onLoginSuccess or onLoginFailed
+                            saveLoggedStatus();
+                            Intent intent = new Intent(QuoteActivity.this,Login.class);
+                            myProgressDialogToClose.dismiss();
+                            startActivity(intent);
+                            finish();
+
+                        }
+                    }, 2500);
 
             return true;
         }
@@ -213,23 +250,27 @@ public class QuoteActivity extends AppCompatActivity {
 
     private void manageProgressDialog() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(QuoteActivity.this,
-                R.style.Custom_Progress_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Cargando...");
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        progressDialog.show();
+        myProgressDialog.show();
+        if (firstProgressToShow){
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        progressDialog.dismiss();
-                    }
-                }, 1500);
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            // On complete call either onLoginSuccess or onLoginFailed
+                            myProgressDialog.dismiss();
+                            firstProgressToShow = false;
+                        }
+                    }, 5000);
+        } else {
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            // On complete call either onLoginSuccess or onLoginFailed
+                            myProgressDialog.dismiss();
+                        }
+                    }, 1500);
+        }
 
     }
 

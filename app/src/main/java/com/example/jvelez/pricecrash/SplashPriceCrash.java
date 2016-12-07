@@ -191,7 +191,7 @@ public class SplashPriceCrash extends AwesomeSplash {
         //Customize Title
         configSplash.setTitleSplash("pricecrash");
         configSplash.setTitleTextColor(R.color.almostwhite);
-        configSplash.setTitleTextSize(40f); //float value
+        configSplash.setTitleTextSize(35f); //float value
         configSplash.setAnimTitleDuration(2000);
         configSplash.setAnimTitleTechnique(Techniques.FlipInX);
         //configSplash.setTitleFont("fonts/DINPro-Light_13935.ttf"); //provide string to your font located in assets/fonts/
