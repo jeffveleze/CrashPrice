@@ -13,7 +13,7 @@
         >
         <activity
             android:name=".QuoteActivity"
-            android:label="@string/app_name2"
+            android:label="Elige tu vehículo"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity

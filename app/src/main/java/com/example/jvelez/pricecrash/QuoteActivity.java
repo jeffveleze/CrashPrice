@@ -72,7 +72,6 @@ public class QuoteActivity extends AppCompatActivity {
         dataBase.syncCarsData();
 
         myProgressDialog = new SpotsDialog(this, R.style.CustomProgressDialogLoading);
-        titulo = (TextView) findViewById(R.id.titulo);
         valorTotal = (TextView) findViewById(R.id.valorTotal);
 
         carro = (Spinner)findViewById(R.id.Carros);
@@ -90,7 +89,7 @@ public class QuoteActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                valorTotal.setText("$: "+String.format("%,d",0));
+                valorTotal.setText("$ "+String.format("%,d",0));
                 if (!firstCallToProgress){
                     manageProgressDialog();
                 }
@@ -117,7 +116,7 @@ public class QuoteActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                valorTotal.setText("$: "+String.format("%,d",0));
+                valorTotal.setText("$ "+String.format("%,d",0));
                 if (firstCallToProgress){
                     firstCallToProgress = false;
                 }
