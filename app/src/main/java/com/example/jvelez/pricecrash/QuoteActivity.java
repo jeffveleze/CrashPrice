@@ -53,7 +53,6 @@ public class QuoteActivity extends AppCompatActivity {
     private boolean firstProgressToShow = true;
     private AlertDialog myProgressDialog;
 
-
     static TextView titulo,valorTotal;
     private Spinner carro, modelos;
     ArrayAdapter<String> arrayAdapterCarros,arrayAdapterModelos;
@@ -85,21 +84,6 @@ public class QuoteActivity extends AppCompatActivity {
             carro.setAdapter(arrayAdapterCarros);
             modelos.setAdapter(arrayAdapterModelos);
         }
-
-        titulo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myProgressDialog.show();
-                new android.os.Handler().postDelayed(
-                        new Runnable() {
-                            public void run() {
-                                // On complete call either onLoginSuccess or onLoginFailed
-                                myProgressDialog.dismiss();
-                            }
-                        }, 5000);
-            }
-        });
-
 
         carro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             String firstItem = String.valueOf(carro.getSelectedItem());
@@ -176,8 +160,6 @@ public class QuoteActivity extends AppCompatActivity {
 
         arrayAdapterModelos = new ArrayAdapter<String>(QuoteActivity.this,android.R.layout.simple_dropdown_item_1line,dataBase.getModelsList(carro.getSelectedItem()));
         modelos.setAdapter(arrayAdapterModelos);
-
-        //Toast.makeText(this,"metodo mostrar modelos",Toast.LENGTH_SHORT).show();
     }
 
     public static void calcularValorFinal(){
@@ -199,7 +181,6 @@ public class QuoteActivity extends AppCompatActivity {
 
 
         for(int i=0;i<piezas.size();i++){
-            //String urlimage="http://www.orionlujosysonido.com/images/rines/rin3.jpg";
             String urlimage=dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.IMAGEN);
             String nombre = ""+piezas.get(i);
             int precioPintura=Integer.parseInt(dataBase.getAttributeFor(carro.getSelectedItem(),modelos.getSelectedItem(),piezas.get(i),DbHelper.attributes.SOLOPINTURA));

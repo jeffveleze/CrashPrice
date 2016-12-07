@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity {
 
     EditText user, password;
     Button loginButton;
-    DbHelper dataBase = new DbHelper();
+    //DbHelper dataBase = new DbHelper();
     private AlertDialog myProgressDialog;
     String userRead = "jeff@gmail.com";
     String passwordRead = "jeff123";
@@ -87,8 +87,8 @@ public class Login extends AppCompatActivity {
                         // On complete call either onLoginSuccess or onLoginFailed
                         myProgressDialog.dismiss();
                         saveLoggedStatus();
-                        goToNextActivity();
                         finish();
+                        goToNextActivity();
                     }
                 }, 2000);
     }

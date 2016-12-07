@@ -105,14 +105,16 @@ public class DbHelper {
         }
     }
 
-    final String recursos = "recursos";
     final String autos = "Autos";
-    final String imagenes = "imagenes";
+    public static boolean calledAlready = false;
     private Map<String, Object> map =  new HashMap<String,Object>();
 
 
     public void configurePersistence(){
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        if (!calledAlready){
+            calledAlready=true;
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
     }
 
     public Map<String,Object> syncCarsData(){
