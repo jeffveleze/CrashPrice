@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">  </string>
+    <string name="app_name"> PriceCrash </string>
+    <string name="app_name2"> </string>
     <string name="action_settings">Logout</string>
     <string name="title_activity_splash_price_crash"> </string>
     <string name="title_activity_login"> </string>
